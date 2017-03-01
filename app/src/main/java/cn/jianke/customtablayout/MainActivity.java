@@ -14,26 +14,26 @@ import java.util.List;
 
 /**
  * @className: MainActivity
- * @classDescription: 演示自定义TabLayout页面
+ * @classDescription: show custom tab layout page
  * @author: leibing
  * @createTime: 2017/2/28
  */
 public class MainActivity extends FragmentActivity {
-    // 全部、待付款、待发货、待收货、待评价等位置索引
+    // all、pay、send、receive、praise position index
     private final static int ALL_INDEX = 0;
     private final static int PAY_INDEX = 1;
     private final static int SEND_INDEX = 2;
     private final static int RECEIVE_INDEX = 3;
     private final static int PRAISE_INDEX = 4;
-    // 顶部横向滑动控件
+    // top horizontal scrollview
     private HorizontalScrollView tabHsv;
-    // 顶部横向容器
+    // top horizontal tab container
     private LinearLayout tabLy;
-    // 内容页
+    // content page
     private ViewPager contentVp;
-    // 顶部滑动布局子view列表
+    // top horizontal child view list
     private ArrayList<View> mChildViewList;
-    // 顶部滑动布局tab名称数组
+    // top horizontal tab name array
     private String[] tabNameArray = {
             "全部",
             "待付款",
@@ -41,18 +41,20 @@ public class MainActivity extends FragmentActivity {
             "待收货",
             "待评价"
     };
-    // 上一个被选中的位置
+    // last selected position
     private int lastSelectPosition = 0;
-    // 全部、待付款、待发货、待收货、待评价等Fragment
+    // all、pay、send、receive、praise fragment
     private ContentFragment allFragment;
     private ContentFragment payFragment;
     private ContentFragment sendFragment;
     private ContentFragment receiveFragment;
     private ContentFragment praiseFragment;
-    //Fragment列表
+    // fragment list
     private List<Fragment> mFragmentList;
-    //标题列表
+    // title list
     private List<String> mTitleList;
+    // screen width
+    private int screenWidth = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +64,11 @@ public class MainActivity extends FragmentActivity {
         tabHsv = (HorizontalScrollView) findViewById(R.id.hsv_tab);
         contentVp = (ViewPager) findViewById(R.id.vp_content);
         tabLy = (LinearLayout) findViewById(R.id.ly_tab);
-        // 获取子view列表
+        // init screen width
+        this.screenWidth = getResources().getDisplayMetrics().widthPixels;
+        // get childview list
         getChildViewList();
-        // 给顶部横向容器添加子view
+        // add child view for top horizontal container
         addChildView();
         // init list
         initList();
@@ -105,7 +109,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset,
                                        int positionOffsetPixels) {
-                // 改变tab位置
+                // change tab position by index
                 changeTabByIndex(position);
             }
 
@@ -122,7 +126,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * 改变tab位置
+     * change tab position by index
      * @author leibing
      * @createTime 2017/2/28
      * @lastModify 2017/2/28
@@ -130,19 +134,28 @@ public class MainActivity extends FragmentActivity {
      * @return
      */
     private void changeTabByIndex(int index){
-        // 当前点击位置不为上次选中位置则处理
+        // when current position not last selected position,invoke
         if (index == lastSelectPosition)
             return;
+        // top horizontal layout selected item width
+        int itemWidth = 0;
+        // top horizontal layout selected item left distance
+        int itemLeftDistance = 0;
+        // need scroll to x position
+        int scollX = 0;
         for (int j=0;j<mChildViewList.size();j++){
-            // 设置本次位置
+            // set current position attribute
             if (j == index){
                 View childView = mChildViewList.get(j);
                 TextView tabNameTv = (TextView) childView.findViewById(R.id.tv_tab_name);
                 View bottomLineVw = (View) childView.findViewById(R.id.vw_bottom_line);
                 tabNameTv.setTextColor(getResources().getColor(R.color.colorblue));
                 bottomLineVw.setVisibility(View.VISIBLE);
+                itemWidth = childView.getMeasuredWidth();
+                itemLeftDistance = childView.getLeft();
+                scollX = itemLeftDistance + itemWidth / 2 - screenWidth / 2;
             }
-            // 设置上次位置
+            // set last position attribute
             if (j == lastSelectPosition){
                 View childView = mChildViewList.get(j);
                 TextView tabNameTv = (TextView) childView.findViewById(R.id.tv_tab_name);
@@ -151,9 +164,11 @@ public class MainActivity extends FragmentActivity {
                 bottomLineVw.setVisibility(View.GONE);
             }
         }
-        // 添加子view
+        // add child view for top horizontal container
         addChildView();
-        // 设置上次位置
+        // scroll top horizontal view
+        tabHsv.smoothScrollTo(scollX, 0);
+        // set last position
         lastSelectPosition = index;
     }
 
@@ -166,35 +181,35 @@ public class MainActivity extends FragmentActivity {
      * @return
      */
     private void initFragment() {
-        // 全部
+        // all
         allFragment =  new ContentFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[ALL_INDEX]);
         allFragment.setArguments(bundle);
         mFragmentList.add(allFragment);
 
-        // 待付款
+        // pay
         payFragment =  new ContentFragment();
         bundle = new Bundle();
         bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[PAY_INDEX]);
         payFragment.setArguments(bundle);
         mFragmentList.add(payFragment);
 
-        // 待发货
+        // send
         sendFragment =  new ContentFragment();
         bundle = new Bundle();
         bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[SEND_INDEX]);
         sendFragment.setArguments(bundle);
         mFragmentList.add(sendFragment);
 
-        // 待收货
+        // receive
         receiveFragment =  new ContentFragment();
         bundle = new Bundle();
         bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[RECEIVE_INDEX]);
         receiveFragment.setArguments(bundle);
         mFragmentList.add(receiveFragment);
 
-        // 待评价
+        // praise
         praiseFragment =  new ContentFragment();
         bundle = new Bundle();
         bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[PRAISE_INDEX]);
@@ -203,7 +218,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * 获取子view列表
+     * get childview list
      * @author leibing
      * @createTime 2017/2/28
      * @lastModify 2017/2/28
@@ -211,33 +226,33 @@ public class MainActivity extends FragmentActivity {
      * @return
      */
     private void getChildViewList() {
-        // 初始化顶部滑动布局子view列表
+        // init top horizontal scroll child view item list
         mChildViewList = new ArrayList<>();
-        // 构造子view
+        // create child view ,add to item list
         for (int i=0;i<tabNameArray.length;i++){
             final View childView = LayoutInflater.from(this).inflate(R.layout.item_tab, null);
             final TextView tabNameTv = (TextView) childView.findViewById(R.id.tv_tab_name);
             final View bottomLineVw = (View) childView.findViewById(R.id.vw_bottom_line);
-            // 给view设置一个位置标识
+            // set a position tag for child view
             childView.setTag(i);
-            // 设置tab名称
+            // set tab name
             tabNameTv.setText(tabNameArray[i]);
-            // 默认第一个item为选中
+            // first item selected default
             if (i == 0) {
                 bottomLineVw.setVisibility(View.VISIBLE);
                 lastSelectPosition = i;
             }
             else
                 bottomLineVw.setVisibility(View.GONE);
-            // 设置监听
+            // set onclick listener
             childView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // 当前点击位置
+                    // get current position from child view tag
                     int currentPosition = (int) childView.getTag();
                     if (currentPosition != lastSelectPosition){
                         contentVp.setCurrentItem(currentPosition,false);
-                        // 改变tab位置
+                        // change tab position by index
                         changeTabByIndex(currentPosition);
                     }
                 }
@@ -247,7 +262,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * 给顶部横向容器添加子view
+     * add child view for top horizontal container
      * @author leibing
      * @createTime 2017/2/28
      * @lastModify 2017/2/28

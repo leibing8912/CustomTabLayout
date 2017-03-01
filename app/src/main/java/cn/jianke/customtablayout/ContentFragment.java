@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 /**
  * @className: ContentFragment
- * @classDescription: 内容页面
+ * @classDescription: content page
  * @author: leibing
  * @createTime: 2017/2/28
  */

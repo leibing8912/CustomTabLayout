@@ -14,13 +14,13 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="20dp"
-            android:textColor="#333333"
+            android:textColor="@color/colorgray"
             android:text="待付款"/>
         <View
             android:id="@+id/vw_bottom_line"
             android:layout_width="30dp"
             android:layout_height="2dp"
-            android:background="#06a6f8"
+            android:background="@color/colorblue"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
