@@ -1,4 +1,4 @@
-package cn.jianke.customtablayout;
+package cn.jianke.customtablayout.activity.order;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,14 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+import cn.jianke.customtablayout.R;
+import cn.jianke.customtablayout.adapter.ViewPagerAdapter;
 
 /**
- * @className: MainActivity
- * @classDescription: show custom tab layout page
+ * @className: OrderActivity
+ * @classDescription: order ui presentation by activity
  * @author: leibing
  * @createTime: 2017/2/28
  */
-public class MainActivity extends FragmentActivity {
+public class OrderActivity extends FragmentActivity {
     // all、pay、send、receive、praise position index
     private final static int ALL_INDEX = 0;
     private final static int PAY_INDEX = 1;
@@ -44,11 +46,11 @@ public class MainActivity extends FragmentActivity {
     // last selected position
     private int lastSelectPosition = 0;
     // all、pay、send、receive、praise fragment
-    private ContentFragment allFragment;
-    private ContentFragment payFragment;
-    private ContentFragment sendFragment;
-    private ContentFragment receiveFragment;
-    private ContentFragment praiseFragment;
+    private OrderFragment allFragment;
+    private OrderFragment payFragment;
+    private OrderFragment sendFragment;
+    private OrderFragment receiveFragment;
+    private OrderFragment praiseFragment;
     // fragment list
     private List<Fragment> mFragmentList;
     // title list
@@ -59,7 +61,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_order);
         // findView
         tabHsv = (HorizontalScrollView) findViewById(R.id.hsv_tab);
         contentVp = (ViewPager) findViewById(R.id.vp_content);
@@ -171,7 +173,7 @@ public class MainActivity extends FragmentActivity {
         // set last position
         lastSelectPosition = index;
     }
-
+    
     /**
      * init fragment
      * @author leibing
@@ -182,37 +184,37 @@ public class MainActivity extends FragmentActivity {
      */
     private void initFragment() {
         // all
-        allFragment =  new ContentFragment();
+        allFragment =  new OrderFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[ALL_INDEX]);
+        bundle.putSerializable(OrderFragment.KEY_TAB_TITLE, tabNameArray[ALL_INDEX]);
         allFragment.setArguments(bundle);
         mFragmentList.add(allFragment);
 
         // pay
-        payFragment =  new ContentFragment();
+        payFragment =  new OrderFragment();
         bundle = new Bundle();
-        bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[PAY_INDEX]);
+        bundle.putSerializable(OrderFragment.KEY_TAB_TITLE, tabNameArray[PAY_INDEX]);
         payFragment.setArguments(bundle);
         mFragmentList.add(payFragment);
 
         // send
-        sendFragment =  new ContentFragment();
+        sendFragment =  new OrderFragment();
         bundle = new Bundle();
-        bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[SEND_INDEX]);
+        bundle.putSerializable(OrderFragment.KEY_TAB_TITLE, tabNameArray[SEND_INDEX]);
         sendFragment.setArguments(bundle);
         mFragmentList.add(sendFragment);
 
         // receive
-        receiveFragment =  new ContentFragment();
+        receiveFragment =  new OrderFragment();
         bundle = new Bundle();
-        bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[RECEIVE_INDEX]);
+        bundle.putSerializable(OrderFragment.KEY_TAB_TITLE, tabNameArray[RECEIVE_INDEX]);
         receiveFragment.setArguments(bundle);
         mFragmentList.add(receiveFragment);
 
         // praise
-        praiseFragment =  new ContentFragment();
+        praiseFragment =  new OrderFragment();
         bundle = new Bundle();
-        bundle.putSerializable(ContentFragment.KEY_TAB_TITLE, tabNameArray[PRAISE_INDEX]);
+        bundle.putSerializable(OrderFragment.KEY_TAB_TITLE, tabNameArray[PRAISE_INDEX]);
         praiseFragment.setArguments(bundle);
         mFragmentList.add(praiseFragment);
     }
@@ -237,7 +239,7 @@ public class MainActivity extends FragmentActivity {
             childView.setTag(i);
             // set tab name
             tabNameTv.setText(tabNameArray[i]);
-            // first item selected default
+            // first position selected default
             if (i == 0) {
                 bottomLineVw.setVisibility(View.VISIBLE);
                 lastSelectPosition = i;

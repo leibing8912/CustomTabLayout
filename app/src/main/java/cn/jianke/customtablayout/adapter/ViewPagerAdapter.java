@@ -1,4 +1,4 @@
-package cn.jianke.customtablayout;
+package cn.jianke.customtablayout.adapter;
 
 
 import android.support.v4.app.Fragment;
@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @className: ViewPagerAdapter
- * @classDescription: ViewPager适配器
+ * @classDescription: ViewPager adapter
  * @author: leibing
  * @createTime: 2017/2/28
  */
@@ -22,18 +22,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         this.titleList = titleList;
     }
 
-    /**
-     * 得到每个页面
-     */
     @Override
     public Fragment getItem(int arg0) {
         return (fragmentList == null || fragmentList.size() == 0) ? null
                 : fragmentList.get(arg0);
     }
 
-    /**
-     * 每个页面的title
-     */
     @Override
     public CharSequence getPageTitle(int position) {
         return (titleList.size() > position) ? titleList.get(position) : "";
