@@ -54,8 +54,8 @@ public class OrderViewModel {
     private void initOrderModel(FragmentActivity mContext){
         // init order data instance
         mOrderModel = new OrderModel(mContext, mModelListener);
-        // order data init
-        mOrderModel.dataInit();
+        // order logical init
+        logicalInit();
     }
 
     /**
@@ -66,7 +66,7 @@ public class OrderViewModel {
      * @param
      * @return
      */
-    public void logicalInit(){
+    private void logicalInit(){
 
     }
 

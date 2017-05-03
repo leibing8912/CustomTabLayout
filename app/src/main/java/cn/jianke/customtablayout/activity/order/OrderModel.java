@@ -27,6 +27,8 @@ public class OrderModel {
     public OrderModel(FragmentActivity mContext, ModelListener mModelListener){
         this.mActivityWeakRef = new WeakReference<FragmentActivity>(mContext);
         this.mModelListener = mModelListener;
+        // order data init
+        dataInit();
     }
 
     /**
@@ -37,7 +39,7 @@ public class OrderModel {
      * @param
      * @return
      */
-    public void dataInit(){
+    private void dataInit(){
 
     }
 

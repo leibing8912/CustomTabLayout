@@ -63,8 +63,6 @@ public class OrderFragment extends Fragment {
         if (getActivity() != null) {
             // init order logical processing instance
             mOrderViewModel = new OrderViewModel(getActivity(), mViewModelListener);
-            // order logical init
-            mOrderViewModel.logicalInit();
         }
     }
 
