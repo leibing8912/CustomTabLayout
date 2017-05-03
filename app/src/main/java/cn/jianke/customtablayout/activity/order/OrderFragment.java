@@ -73,4 +73,9 @@ public class OrderFragment extends Fragment {
         super.onAttach(activity);
         contentTitle = (String) getArguments().getSerializable(KEY_TAB_TITLE);
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
 }

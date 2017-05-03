@@ -112,7 +112,9 @@ public class OrderActivity extends FragmentActivity {
             public void onPageScrolled(int position, float positionOffset,
                                        int positionOffsetPixels) {
                 // change tab position by index
-                changeTabByIndex(position);
+                if (positionOffset == 0) {
+                    changeTabByIndex(position);
+                }
             }
 
             @Override

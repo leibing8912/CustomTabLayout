@@ -39,6 +39,8 @@ public class OrderViewModel {
         this.mActivityWeakRef = new WeakReference<FragmentActivity>(mContext);
         // init order logical processing listener
         this.mViewModelListener = mViewModelListener;
+        // init order data
+        initOrderModel(mContext);
     }
 
     /**
@@ -65,6 +67,7 @@ public class OrderViewModel {
      * @return
      */
     public void logicalInit(){
+
     }
 
     /**
@@ -74,5 +77,6 @@ public class OrderViewModel {
      * @createTime: 2017/3/1
      */
     public interface ViewModelListener extends CommonInterface{
+
     }
 }
